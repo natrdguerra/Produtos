@@ -29,6 +29,8 @@ const host = 'localhost';
 var listaProdutos = [];
 
 function cadastrarProdutoView(req, res) {
+    const mensagemUltimoLogin = exibirUltimoLogin(req);
+
     res.send(`
         <!DOCTYPE html>
         <html lang="pt-br">
@@ -73,6 +75,9 @@ function cadastrarProdutoView(req, res) {
                     <button type="submit" class="btn btn-primary">Cadastrar Produto</button>
                     <br><br>
                 </form>
+                     <div class="mb-3">
+                     ${mensagemUltimoLogin}
+                     </div>
             </div>
             <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
         </body>
@@ -80,11 +85,18 @@ function cadastrarProdutoView(req, res) {
     `);
 }
 
-function menuView(req, resp) {
+function exibirUltimoLogin(req) {
     const dataHoraUltimoLogin = req.cookies['dataHoraUltimoLogin'];
-    if (!dataHoraUltimoLogin){
-        dataHoraUltimoLogin='';
+    if (dataHoraUltimoLogin) {
+        return `<p><span>Seu último acesso foi realizado em ${dataHoraUltimoLogin}</span></p>`;
+    } else {
+        return `<p><span>Este é seu primeiro acesso.</span></p>`;
     }
+}
+
+
+function menuView(req, resp) {
+    const mensagemUltimoLogin = exibirUltimoLogin(req);
 
     resp.send(`
         <!DOCTYPE html>
@@ -108,6 +120,9 @@ function menuView(req, resp) {
           <a class="nav-link active" aria-current="page" href="/cadastrarProduto">Cadastro de Produtos</a>
         </li>
       </ul>
+     <div class="mb-3">
+          ${mensagemUltimoLogin}
+     </div>
     </div>
   </div>
 </nav>
@@ -117,6 +132,8 @@ function menuView(req, resp) {
 }
 
 function cadastrarProduto(req,resp){
+    const mensagemUltimoLogin = exibirUltimoLogin(req);
+
     const codigoBarras = req.body.codigoBarras;
     const descricao = req.body.descricao;
     const precoCusto = req.body.precoCusto;
@@ -125,10 +142,6 @@ function cadastrarProduto(req,resp){
     const qtdEstoque = req.body.qtdEstoque;
     const fabricante = req.body.fabricante;
 
-    const dataHoraUltimoLogin = req.cookies['dataHoraUltimoLogin'];
-    if (!dataHoraUltimoLogin){
-        dataHoraUltimoLogin='';
-    }
 
     if (codigoBarras && descricao && precoCusto && precoVenda && dataValidade && qtdEstoque && fabricante) {
 
@@ -177,6 +190,10 @@ function cadastrarProduto(req,resp){
     </table>
     <a class="btn btn-dark" href="/cadastrarProduto" role="button">Continuar cadastrando</a>
     <a class="btn btn-dark" href="/" role="button">Voltar para o menu</a>
+    <br><br>
+    <div class="mb-3">
+          ${mensagemUltimoLogin}
+    </div>
     </body>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     </html>
@@ -290,8 +307,8 @@ function cadastrarProduto(req,resp){
             </div>
             </form>
         </div>
-            <div>
-                <p><span>Seu último acesso foi realizado em ${dataHoraUltimoLogin}</span></p>
+            <div class="mb-3">
+             ${mensagemUltimoLogin}
             </div>
         </body>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
