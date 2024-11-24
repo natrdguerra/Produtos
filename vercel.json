@@ -1,8 +1,13 @@
 {
-  "rewrites": [
+  "headers": [
     {
-      "source": "/login",
-      "destination": "/login.html"
+      "source": "/login.html",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/html"
+        }
+      ]
     }
   ]
 }
