@@ -10,9 +10,9 @@ app.use(session({
     resave: false,
     saveUninitialized: true,
     cookie: {
-        secure: false, //utilizada com http e não somente com https
+        secure: false,
         httpOnly: true,
-        maxAge: 1000 * 60 * 30 //30 minutos
+        maxAge: 1000 * 60 * 30 
     }
 }));
 
