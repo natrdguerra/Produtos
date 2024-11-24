@@ -21,7 +21,7 @@ app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
 
 
-app.use(express.static('public'));
+app.use(express.static('./pages/public'));
 
 const porta = 3000;
 const host = 'localhost'; 
