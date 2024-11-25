@@ -36,115 +36,52 @@ function cadastrarProdutoView(req, res) {
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <title>Cadastro de Produto</title>
-            <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-            <script>
-
-            function validarFormulario() {
-             const codigoBarras = document.getElementById('codigoBarras').value;
-             const descricao = document.getElementById('descricao').value;
-             const precoCusto = document.getElementById('precoCusto').value;
-             const precoVenda = document.getElementById('precoVenda').value;
-             const dataValidade = document.getElementById('dataValidade').value;
-             const qtdEstoque = document.getElementById('qtdEstoque').value;
-             const fabricante = document.getElementById('fabricante').value;
-
-             let valido = true;
-
-             document.querySelectorAll('.error-message').forEach(function(element) {
-             lement.remove();
-             });
-
-             if (!codigoBarras) {
-             const errorMsg = document.createElement('p');
-              errorMsg.classList.add('text-danger', 'error-message');
-             errorMsg.innerText = 'O código de barras é obrigatório.';
-             document.getElementById('codigoBarras').insertAdjacentElement('afterend', errorMsg);
-             valido = false;
-             }
-
-             if (!descricao) {
-             const errorMsg = document.createElement('p');
-             errorMsg.classList.add('text-danger', 'error-message');
-             errorMsg.innerText = 'A descrição é obrigatória.';
-             document.getElementById('descricao').insertAdjacentElement('afterend', errorMsg);
-             valido = false;
-             }
-
-             if (!precoCusto) {
-             const errorMsg = document.createElement('p');
-             errorMsg.classList.add('text-danger', 'error-message');
-             errorMsg.innerText = 'O preço de custo é obrigatório.';
-             document.getElementById('precoCusto').insertAdjacentElement('afterend', errorMsg);
-             valido = false;
-             }
-
-             if (!precoVenda) {
-             const errorMsg = document.createElement('p');
-             errorMsg.classList.add('text-danger', 'error-message');
-             errorMsg.innerText = 'O preço de venda é obrigatório.';
-             document.getElementById('precoVenda').insertAdjacentElement('afterend', errorMsg);
-              alido = false;
-             }
-
-             if (!dataValidade) {
-             const errorMsg = document.createElement('p');
-             errorMsg.classList.add('text-danger', 'error-message');
-             errorMsg.innerText = 'A data de validade é obrigatória.';
-             document.getElementById('dataValidade').insertAdjacentElement('afterend', errorMsg);
-             valido = false;
-             }
-
-             if (!qtdEstoque) {
-             const errorMsg = document.createElement('p');
-             errorMsg.classList.add('text-danger', 'error-message');
-             errorMsg.innerText = 'A quantidade de estoque é obrigatória.';
-             document.getElementById('qtdEstoque').insertAdjacentElement('afterend', errorMsg);
-             valido = false;
-             }
-
-             if (!fabricante) {
-             const errorMsg = document.createElement('p');
-             errorMsg.classList.add('text-danger', 'error-message');
-             errorMsg.innerText = 'O nome do fabricante é obrigatório.';
-             document.getElementById('fabricante').insertAdjacentElement('afterend', errorMsg);
-             valido = false;
-             }
-
-    return valido;
-}
-            </script>
+            <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+            <style>
+                .error-message {
+                    color: red;
+                    font-size: 0.9em;
+                }
+            </style>
         </head>
         <body>
             <div class="container mt-5">
                 <h1>Cadastro de Produto</h1>
-                <form action="/cadastrarProduto" method="POST" onsubmit="return validarFormulario()">
+                <form id="formCadastro" action="/cadastrarProduto" method="POST" novalidate>
                     <div class="mb-3">
                         <label for="codigoBarras" class="form-label">Código de Barras</label>
                         <input type="text" class="form-control" id="codigoBarras" name="codigoBarras" placeholder="Informe o Código de Barras">
+                        <span class="error-message" id="errocodigoBarras"></span>
                     </div>
                     <div class="mb-3">
                         <label for="descricao" class="form-label">Descrição do Produto</label>
                         <input type="text" class="form-control" id="descricao" name="descricao" placeholder="Informe a Descrição do Produto">
+                        <span class="error-message" id="errodescricao"></span>
                     </div>
                     <div class="mb-3">
                         <label for="precoCusto" class="form-label">Preço de Custo</label>
                         <input type="number" class="form-control" id="precoCusto" name="precoCusto" placeholder="Informe o Preço de Custo">
+                        <span class="error-message" id="erroprecoCusto"></span>
                     </div>
                     <div class="mb-3">
                         <label for="precoVenda" class="form-label">Preço de Venda</label>
                         <input type="number" class="form-control" id="precoVenda" name="precoVenda" placeholder="Informe o Preço de Venda">
+                        <span class="error-message" id="erroprecoVenda"></span>
                     </div>
                     <div class="mb-3">
                         <label for="dataValidade" class="form-label">Data de Validade</label>
                         <input type="date" class="form-control" id="dataValidade" name="dataValidade">
+                        <span class="error-message" id="errodataValidade"></span>
                     </div>
                     <div class="mb-3">
                         <label for="qtdEstoque" class="form-label">Quantidade em Estoque</label>
                         <input type="number" class="form-control" id="qtdEstoque" name="qtdEstoque" placeholder="Informe a Quantidade em Estoque">
+                        <span class="error-message" id="erroqtdEstoque"></span>
                     </div>
                     <div class="mb-3">
                         <label for="fabricante" class="form-label">Nome do Fabricante</label>
                         <input type="text" class="form-control" id="fabricante" name="fabricante" placeholder="Informe o Nome do Fabricante">
+                        <span class="error-message" id="errofabricante"></span>
                     </div>
                     <button type="submit" class="btn btn-primary">Cadastrar Produto</button>
                     <br><br>
@@ -153,11 +90,61 @@ function cadastrarProdutoView(req, res) {
                      </div>
                 </form>
             </div>
+            <script>
+                document.getElementById('formCadastro').addEventListener('submit', function(event) {
+                    let isValid = true;
+
+                    // Limpar mensagens de erro e classes
+                    document.querySelectorAll('.error-message').forEach(el => el.textContent = '');
+                    document.querySelectorAll('.form-control, .form-select').forEach(el => el.classList.remove('is-invalid'));
+
+                    // Validação de campos
+                    if (!document.getElementById('codigoBarras').value.trim()) {
+                        document.getElementById('errocodigoBarras').textContent = 'O código de barras é obrigatório.';
+                        document.getElementById('codigoBarras').classList.add('is-invalid');
+                        isValid = false;
+                    }
+                    if (!document.getElementById('descricao').value.trim()) {
+                        document.getElementById('errodescricao').textContent = 'A descrição é obrigatória.';
+                        document.getElementById('descricao').classList.add('is-invalid');
+                        isValid = false;
+                    }
+                    if (!document.getElementById('precoCusto').value.trim()) {
+                        document.getElementById('erroprecoCusto').textContent = 'O preço de custo é obrigatório.';
+                        document.getElementById('precoCusto').classList.add('is-invalid');
+                        isValid = false;
+                    }
+                    if (!document.getElementById('precoVenda').value.trim()) {
+                        document.getElementById('erroprecoVenda').textContent = 'O preço de venda é obrigatório.';
+                        document.getElementById('precoVenda').classList.add('is-invalid');
+                        isValid = false;
+                    }
+                    if (!document.getElementById('dataValidade').value.trim()) {
+                        document.getElementById('errodataValidade').textContent = 'A data de validade é obrigatória.';
+                        document.getElementById('dataValidade').classList.add('is-invalid');
+                        isValid = false;
+                    }
+                    if (!document.getElementById('qtdEstoque').value.trim()) {
+                        document.getElementById('erroqtdEstoque').textContent = 'A quantidade de estoque é obrigatória.';
+                        document.getElementById('qtdEstoque').classList.add('is-invalid');
+                        isValid = false;
+                    }
+                    if (!document.getElementById('fabricante').value.trim()) {
+                        document.getElementById('errofabricante').textContent = 'O nome do fabricante é obrigatório.';
+                        document.getElementById('fabricante').classList.add('is-invalid');
+                        isValid = false;
+                    }
+
+                    // Impedir envio do formulário se inválido
+                    if (!isValid) {
+                        event.preventDefault();
+                    }
+                });
+            </script>
         </body>
         </html>
     `);
 }
-
 function exibirUltimoLogin(req) {
     const dataHoraUltimoLogin = req.cookies['dataHoraUltimoLogin'];
     if (dataHoraUltimoLogin) {
