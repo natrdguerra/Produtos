@@ -141,6 +141,7 @@ function exibirUltimoLogin(req) {
             timeZone: 'America/Sao_Paulo',
             dateStyle: 'short',
             timeStyle: 'short',
+            hourCycle: 'h12', // Formato de 12 horas
         }).format(new Date(dataHoraUltimoLogin));
 
         return `<p><span>Seu último acesso foi realizado em ${dataHoraFormatada}</span></p>`;
