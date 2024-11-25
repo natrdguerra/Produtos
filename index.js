@@ -136,15 +136,7 @@ function cadastrarProdutoView(req, res) {
 function exibirUltimoLogin(req) {
     const dataHoraUltimoLogin = req.cookies['dataHoraUltimoLogin'];
     if (dataHoraUltimoLogin) {
-
-        const dataHoraFormatada = new Intl.DateTimeFormat('pt-BR', {
-            timeZone: 'America/Sao_Paulo',
-            dateStyle: 'short',
-            timeStyle: 'short',
-            hourCycle: 'h12', 
-        }).format(new Date(dataHoraUltimoLogin));
-
-        return `<p><span>Seu último acesso foi realizado em ${dataHoraFormatada}</span></p>`;
+        return `<p><span>Seu último acesso foi realizado em ${dataHoraUltimoLogin}</span></p>`;
     } else {
         return `<p><span>Este é seu primeiro acesso.</span></p>`;
     }
@@ -173,6 +165,9 @@ function menuView(req, resp) {
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="/cadastrarProduto">Cadastro de Produtos</a>
+        </li>
+        <li>
+        <a class="nav-link active" aria-current="page" href="/logout">Sair</a>
         </li>
       </ul>
      <div class="mb-3">
