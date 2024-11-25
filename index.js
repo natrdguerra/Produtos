@@ -21,9 +21,6 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(express.static('./pages/public'));
 
-const porta = 3000;
-const host = 'localhost'; 
-
 var listaProdutos = [];
 
 function cadastrarProdutoView(req, res) {
@@ -311,8 +308,12 @@ app.get('/',verificarAutenticacao,menuView);
 app.get('/cadastrarProduto', verificarAutenticacao,cadastrarProdutoView);
 app.post('/cadastrarProduto', verificarAutenticacao, cadastrarProduto);
 
-app.listen(porta, host, () => {
-    console.log(`Servidor iniciado em execução no endereço http://${host}:${porta}`);
-});
+if (process.env.NODE_ENV !== 'production') {
+    const porta = 3000;
+    const host = 'localhost';
+    app.listen(porta, host, () => {
+        console.log(`Servidor rodando em http://${host}:${porta}`);
+    });
+}
 
 export default app;
