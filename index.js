@@ -1,32 +1,30 @@
 import express from 'express';
 import session from 'express-session';
 import cookieParser from 'cookie-parser';
-import path from 'path'
-
-const porta = 3000;
-const host = 'localhost';
-
-var listaProdutos = [];
 
 const app = express();
 
-app.use(express.urlencoded({ extended: true }));
-
 app.use(session({
-    secret: 'MinH4Ch4v3S3cr3t4',
+    secret: 'M1nh4Chav3S3cr3t4',
     resave: false,
     saveUninitialized: true,
     cookie: {
         secure: false,
         httpOnly: true,
-        maxAge: 1000 * 60 * 15 //30 minutos
+        maxAge: 1000 * 60 * 30 
     }
 }));
 
 app.use(cookieParser());
 
+app.use(express.urlencoded({ extended: true }));
 
-app.use(express.static('./public'));
+app.use(express.static('./pages/public'));
+
+const porta = 3000;
+const host = 'localhost'; 
+
+var listaProdutos = [];
 
 function cadastrarProdutoView(req, res) {
     const mensagemUltimoLogin = exibirUltimoLogin(req);
@@ -90,9 +88,11 @@ function cadastrarProdutoView(req, res) {
                 document.getElementById('formCadastro').addEventListener('submit', function(event) {
                     let isValid = true;
 
+                    // Limpar mensagens de erro e classes
                     document.querySelectorAll('.error-message').forEach(el => el.textContent = '');
                     document.querySelectorAll('.form-control, .form-select').forEach(el => el.classList.remove('is-invalid'));
 
+                    // Validação de campos
                     if (!document.getElementById('codigoBarras').value.trim()) {
                         document.getElementById('errocodigoBarras').textContent = 'O código de barras é obrigatório.';
                         document.getElementById('codigoBarras').classList.add('is-invalid');
@@ -129,6 +129,7 @@ function cadastrarProdutoView(req, res) {
                         isValid = false;
                     }
 
+                    // Impedir envio do formulário se inválido
                     if (!isValid) {
                         event.preventDefault();
                     }
@@ -138,7 +139,6 @@ function cadastrarProdutoView(req, res) {
         </html>
     `);
 }
-
 function exibirUltimoLogin(req) {
     const dataHoraUltimoLogin = req.cookies['dataHoraUltimoLogin'];
     if (dataHoraUltimoLogin) {
@@ -147,6 +147,7 @@ function exibirUltimoLogin(req) {
         return `<p><span>Este é seu primeiro acesso.</span></p>`;
     }
 }
+
 
 function menuView(req, resp) {
     const mensagemUltimoLogin = exibirUltimoLogin(req);
@@ -198,8 +199,7 @@ function cadastrarProduto(req, resp) {
     const produto = { codigoBarras, descricao, precoCusto, precoVenda, dataValidade, qtdEstoque, fabricante };
     listaProdutos.push(produto); 
 
-   
-    resp.write(`   
+    resp.write(`
         <!DOCTYPE html>
         <html lang="pt-br">
         <head>
@@ -210,8 +210,8 @@ function cadastrarProduto(req, resp) {
         </head>
         <body>
         <table class="table">
-  <thead>
-    <tr>
+            <thead>
+                <tr>
                     <th scope="col">Código de Barras</th>
                     <th scope="col">Descrição do Produto</th>
                     <th scope="col">Preço de Custo</th>
@@ -219,12 +219,13 @@ function cadastrarProduto(req, resp) {
                     <th scope="col">Data de Validade</th>
                     <th scope="col">Quantidade em Estoque</th>
                     <th scope="col">Nome do Fabricante</th>
-    </tr>
-  </thead>
-  <tbody>`);
+                </tr>
+            </thead>
+            <tbody>`);
 
-  for (let i = 0; i < listaProdutos.length; i++) {
-    resp.write(`<tr>
+    for (let i = 0; i < listaProdutos.length; i++) {
+        resp.write(`
+            <tr>
                 <td>${listaProdutos[i].codigoBarras}</td>
                 <td>${listaProdutos[i].descricao}</td>
                 <td>${listaProdutos[i].precoCusto}</td>
@@ -232,79 +233,78 @@ function cadastrarProduto(req, resp) {
                 <td>${listaProdutos[i].dataValidade}</td>
                 <td>${listaProdutos[i].qtdEstoque}</td>
                 <td>${listaProdutos[i].fabricante}</td>
-                </tr>
-        `)
-  }
+            </tr>
+        `);
+    }
 
-  resp.write(`
-    </tbody>
-    </table>
-    <a class="btn btn-dark" href="/cadastrarProduto" role="button">Continuar cadastrando</a>
-    <a class="btn btn-dark" href="/" role="button">Voltar para o menu</a>
-    <br><br>
-    <div class="mb-3">
-        ${mensagemUltimoLogin}
-    </div>
-    </body>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-</html>
-`);
-resp.end();
-
+    resp.write(`
+        </tbody>
+        </table>
+        <a class="btn btn-dark" href="/cadastrarProduto" role="button">Continuar cadastrando</a>
+        <a class="btn btn-dark" href="/" role="button">Voltar para o menu</a>
+        <br><br>
+        <div class="mb-3">
+            ${mensagemUltimoLogin}
+        </div>
+        </body>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    </html>
+    `);
+    resp.end();
 }
 
-function autenticarUsuario(req, resp){
+function autenticarUsuario(req, resp) {
     const usuario = req.body.usuario;
     const senha = req.body.senha;
 
-    if(usuario=== 'admin' && senha === '123'){
+    console.log("Usuário enviado:", usuario);
+    console.log("Senha enviada:", senha);
 
+    if (usuario === 'admin' && senha === '123') {
+        console.log("Autenticação bem-sucedida");
         req.session.usuarioLogado = true;
-        resp.cookie('dataHoraUltimoLogin', new Date().toLocaleString(), {maxAge: 1000 * 60 * 60 * 24 * 30, httpOnly: true });
-        resp.redirect('/')
-    }
-    else{
+        resp.cookie('dataHoraUltimoLogin', new Date().toLocaleString(), { maxAge: 1000 * 60 * 60 * 24 * 30, httpOnly: true });
+        resp.redirect('/');
+    } else {
+        console.log("Autenticação falhou");
         resp.send(`
-                    <html>
-                        <head>
-                        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-                        </head>
-                        <body>
-                            <div class="container w-25"> 
-                                <div class="alert alert-danger" role="alert">
-                                Usuário ou senha inválidos!
-                                </div>
-                                <div>
-                                    <a href="/login.html" class="btn btn-primary">Tentar novamente</a>
-                                            </div>
-                                </div>
-                        </body>
-                        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-                                integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-                                crossorigin="anonymous">
-                        </script>
-                    </html> 
-                  `);
+            <html>
+                <head>
+                    <meta charset="utf-8">
+                    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+                </head>
+                <body>
+                    <div class="container w-25"> 
+                        </br>
+                        <div class="alert alert-danger" role="alert">
+                            Usuário ou senha inválidos!
+                        </div>
+                        <div>
+                            <a href="/login.html" class="btn btn-primary">Tentar novamente</a>
+                        </div>
+                    </div>
+                </body>
+            </html>
+        `);
     }
-}
+}    
 
-function verificarAutenticacao(req, resp, next){
-    if(req.session.usuarioLogado){
+function verificarAutenticacao(req, resp, next) {
+    console.log("Sessão ativa:", req.session);
+    if (req.session.usuarioLogado) {
         next();
-    }
-    else
-    {
+    } else {
         resp.redirect('/login.html');
     }
-};
+}    
 
-app.get('/login.html', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'login.html'));
+app.get('/login', (req, resp) =>{
+    resp.redirect('/login.html');
 });
 
-app.get('/logout', (req,resp)=>{
-     req.session.destroy();
-     resp.redirect('/login.html');
+app.get('/logout', (req, resp) => {
+    req.session.destroy(); 
+    resp.redirect('/login.html');
 });
 app.post('/login', autenticarUsuario);
 app.get('/',verificarAutenticacao,menuView);
@@ -314,4 +314,5 @@ app.post('/cadastrarProduto', verificarAutenticacao, cadastrarProduto);
 app.listen(porta, host, () => {
     console.log(`Servidor iniciado em execução no endereço http://${host}:${porta}`);
 });
+
 export default app;
