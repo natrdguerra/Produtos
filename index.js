@@ -5,7 +5,7 @@ import cookieParser from 'cookie-parser';
 const app = express();
 
 app.use(session({
-    secret: 'minhachavesecreta',
+    secret: 'M1nh4Chav3S3cr3t4',
     resave: false,
     saveUninitialized: true,
     cookie: {
@@ -16,6 +16,8 @@ app.use(session({
 }));
 
 app.use(cookieParser());
+
+app.use(express.json());
 
 app.use(express.urlencoded({ extended: true }));
 
@@ -35,49 +37,124 @@ function cadastrarProdutoView(req, res) {
         <head>
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>Cadastro de Produtos</title>
+            <title>Cadastro de Produto</title>
             <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+            <script>
+
+            function validarFormulario() {
+             const codigoBarras = document.getElementById('codigoBarras').value;
+             const descricao = document.getElementById('descricao').value;
+             const precoCusto = document.getElementById('precoCusto').value;
+             const precoVenda = document.getElementById('precoVenda').value;
+             const dataValidade = document.getElementById('dataValidade').value;
+             const qtdEstoque = document.getElementById('qtdEstoque').value;
+             const fabricante = document.getElementById('fabricante').value;
+
+             let valido = true;
+
+             document.querySelectorAll('.error-message').forEach(function(element) {
+             lement.remove();
+             });
+
+             if (!codigoBarras) {
+             const errorMsg = document.createElement('p');
+              errorMsg.classList.add('text-danger', 'error-message');
+             errorMsg.innerText = 'O código de barras é obrigatório.';
+             document.getElementById('codigoBarras').insertAdjacentElement('afterend', errorMsg);
+             valido = false;
+             }
+
+             if (!descricao) {
+             const errorMsg = document.createElement('p');
+             errorMsg.classList.add('text-danger', 'error-message');
+             errorMsg.innerText = 'A descrição é obrigatória.';
+             document.getElementById('descricao').insertAdjacentElement('afterend', errorMsg);
+             valido = false;
+             }
+
+             if (!precoCusto) {
+             const errorMsg = document.createElement('p');
+             errorMsg.classList.add('text-danger', 'error-message');
+             errorMsg.innerText = 'O preço de custo é obrigatório.';
+             document.getElementById('precoCusto').insertAdjacentElement('afterend', errorMsg);
+             valido = false;
+             }
+
+             if (!precoVenda) {
+             const errorMsg = document.createElement('p');
+             errorMsg.classList.add('text-danger', 'error-message');
+             errorMsg.innerText = 'O preço de venda é obrigatório.';
+             document.getElementById('precoVenda').insertAdjacentElement('afterend', errorMsg);
+              alido = false;
+             }
+
+             if (!dataValidade) {
+             const errorMsg = document.createElement('p');
+             errorMsg.classList.add('text-danger', 'error-message');
+             errorMsg.innerText = 'A data de validade é obrigatória.';
+             document.getElementById('dataValidade').insertAdjacentElement('afterend', errorMsg);
+             valido = false;
+             }
+
+             if (!qtdEstoque) {
+             const errorMsg = document.createElement('p');
+             errorMsg.classList.add('text-danger', 'error-message');
+             errorMsg.innerText = 'A quantidade de estoque é obrigatória.';
+             document.getElementById('qtdEstoque').insertAdjacentElement('afterend', errorMsg);
+             valido = false;
+             }
+
+             if (!fabricante) {
+             const errorMsg = document.createElement('p');
+             errorMsg.classList.add('text-danger', 'error-message');
+             errorMsg.innerText = 'O nome do fabricante é obrigatório.';
+             document.getElementById('fabricante').insertAdjacentElement('afterend', errorMsg);
+             valido = false;
+             }
+
+    return valido;
+}
+            </script>
         </head>
         <body>
             <div class="container mt-5">
-                <h1>Cadastro de Produtos</h1>
-                <form action="/cadastrarProduto" method="POST">
+                <h1>Cadastro de Produto</h1>
+                <form action="/cadastrarProduto" method="POST" onsubmit="return validarFormulario()">
                     <div class="mb-3">
                         <label for="codigoBarras" class="form-label">Código de Barras</label>
-                        <input type="text" class="form-control" id="codigoBarras" name="codigoBarras" placeholder="Digite o código de barras" required>
+                        <input type="text" class="form-control" id="codigoBarras" name="codigoBarras" placeholder="Informe o Código de Barras">
                     </div>
                     <div class="mb-3">
                         <label for="descricao" class="form-label">Descrição do Produto</label>
-                        <input type="text" class="form-control" id="descricao" name="descricao" placeholder="Digite a descrição do produto" required>
+                        <input type="text" class="form-control" id="descricao" name="descricao" placeholder="Informe a Descrição do Produto">
                     </div>
                     <div class="mb-3">
                         <label for="precoCusto" class="form-label">Preço de Custo</label>
-                        <input type="number" class="form-control" id="precoCusto" name="precoCusto" step="0.01" placeholder="Digite o preço de custo" required>
+                        <input type="number" class="form-control" id="precoCusto" name="precoCusto" placeholder="Informe o Preço de Custo">
                     </div>
                     <div class="mb-3">
                         <label for="precoVenda" class="form-label">Preço de Venda</label>
-                        <input type="number" class="form-control" id="precoVenda" name="precoVenda" step="0.01" placeholder="Digite o preço de venda" required>
+                        <input type="number" class="form-control" id="precoVenda" name="precoVenda" placeholder="Informe o Preço de Venda">
                     </div>
                     <div class="mb-3">
                         <label for="dataValidade" class="form-label">Data de Validade</label>
-                        <input type="date" class="form-control" id="dataValidade" name="dataValidade" required>
+                        <input type="date" class="form-control" id="dataValidade" name="dataValidade">
                     </div>
                     <div class="mb-3">
                         <label for="qtdEstoque" class="form-label">Quantidade em Estoque</label>
-                        <input type="number" class="form-control" id="qtdEstoque" name="qtdEstoque" placeholder="Digite a quantidade em estoque" required>
+                        <input type="number" class="form-control" id="qtdEstoque" name="qtdEstoque" placeholder="Informe a Quantidade em Estoque">
                     </div>
                     <div class="mb-3">
                         <label for="fabricante" class="form-label">Nome do Fabricante</label>
-                        <input type="text" class="form-control" id="fabricante" name="fabricante" placeholder="Digite o nome do fabricante" required>
+                        <input type="text" class="form-control" id="fabricante" name="fabricante" placeholder="Informe o Nome do Fabricante">
                     </div>
                     <button type="submit" class="btn btn-primary">Cadastrar Produto</button>
                     <br><br>
-                </form>
                      <div class="mb-3">
                      ${mensagemUltimoLogin}
                      </div>
+                </form>
             </div>
-            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
         </body>
         </html>
     `);
@@ -129,7 +206,7 @@ function menuView(req, resp) {
 </html> `)
 }
 
-function cadastrarProduto(req,resp){
+function cadastrarProduto(req, resp) {
     const mensagemUltimoLogin = exibirUltimoLogin(req);
 
     const codigoBarras = req.body.codigoBarras;
@@ -140,38 +217,36 @@ function cadastrarProduto(req,resp){
     const qtdEstoque = req.body.qtdEstoque;
     const fabricante = req.body.fabricante;
 
+    const produto = { codigoBarras, descricao, precoCusto, precoVenda, dataValidade, qtdEstoque, fabricante };
+    listaProdutos.push(produto); 
 
-    if (codigoBarras && descricao && precoCusto && precoVenda && dataValidade && qtdEstoque && fabricante) {
-
-    const produto = { codigoBarras, descricao, precoCusto, precoVenda, dataValidade, qtdEstoque, fabricante};
-    listaProdutos.push(produto);
-
-    resp.write(`   
+    resp.write(`
         <!DOCTYPE html>
         <html lang="pt-br">
         <head>
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>Lista de Fornecedores</title>
+            <title>Lista de Produtos</title>
             <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
         </head>
         <body>
         <table class="table">
-  <thead>
-    <tr>
-      <th scope="col">Código de Barras</th>
-      <th scope="col">Descrição do Produto</th>
-      <th scope="col">Preço de Custo</th>
-      <th scope="col">Preço de Venda</th>
-      <th scope="col">Data de Validade</th>
-      <th scope="col">Quantidade em Estoque</th>
-      <th scope="col">Nome do Fabricante</th>
-    </tr>
-  </thead>
-  <tbody>`);
+            <thead>
+                <tr>
+                    <th scope="col">Código de Barras</th>
+                    <th scope="col">Descrição do Produto</th>
+                    <th scope="col">Preço de Custo</th>
+                    <th scope="col">Preço de Venda</th>
+                    <th scope="col">Data de Validade</th>
+                    <th scope="col">Quantidade em Estoque</th>
+                    <th scope="col">Nome do Fabricante</th>
+                </tr>
+            </thead>
+            <tbody>`);
 
-  for (var i = 0; i < listaProdutos.length; i++){
-    resp.write(`<tr>
+    for (let i = 0; i < listaProdutos.length; i++) {
+        resp.write(`
+            <tr>
                 <td>${listaProdutos[i].codigoBarras}</td>
                 <td>${listaProdutos[i].descricao}</td>
                 <td>${listaProdutos[i].precoCusto}</td>
@@ -179,141 +254,23 @@ function cadastrarProduto(req,resp){
                 <td>${listaProdutos[i].dataValidade}</td>
                 <td>${listaProdutos[i].qtdEstoque}</td>
                 <td>${listaProdutos[i].fabricante}</td>
-                </tr>
-        `)
-  }
+            </tr>
+        `);
+    }
 
-  resp.write(`
-    </tbody>
-    </table>
-    <a class="btn btn-dark" href="/cadastrarProduto" role="button">Continuar cadastrando</a>
-    <a class="btn btn-dark" href="/" role="button">Voltar para o menu</a>
-    <br><br>
-    <div class="mb-3">
-          ${mensagemUltimoLogin}
-    </div>
-    </body>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-    </html>
-`);
-  }
-    else
-    {
-        resp.write(`
-            <!DOCTYPE html>
-            <html lang="pt-br">
-            <head>
-                <meta charset="UTF-8">
-                <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                <title>Cadastro de Produtos</title>
-                <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-            </head>
-            <body>
-                <div class="container mt-5">
-                    <h1>Cadastro de Fornecedores</h1>
-                    <form action="/cadastrarProduto" method="POST">
-                                <div class="mb-3">
-                                    <label for="codigoBarras" class="form-label">Código de Barras</label>
-                                    <input type="text" class="form-control" id="codigoBarras" name="codigoBarras" value="${codigoBarras}">
-            `);
-            if (!codigoBarras){
-                resp.write(`
-                    <div>
-                        <span><p class="text-danger">Por favor, você deve informar o Código de Barras</p></span>
-                    </div>
-                    `);
-            }
-            resp.write(`
-                            <div class="mb-3">
-                            <label for="descricao" class="form-label">Descrição do Produto</label>
-                            <input type="text" class="form-control" id="descricao" name="descricao" value="${descricao}">`);
-            if (!descricao){
-                resp.write(`
-                    <div>
-                        <span><p class="text-danger">Por favor, você deve informar a Descrição do Produto!</p></span>
-                    </div>
-                    `);
-            }
-            resp.write(`
-                <div class="mb-3">
-                <label for="precoCusto" class="form-label">Preço de Custo</label>
-                <input type="number" class="form-control" id="precoCusto" name="precoCusto" value="${precoCusto}">`);
-            if (!precoCusto){
-            resp.write(`
-            <div>
-            <span><p class="text-danger">Por favor, você deve informar o Preço de Custo!</p></span>
-            </div>
-            `);
-            }
-            resp.write(`
-                            <div class="mb-3">
-                            <label for="precoVenda" class="form-label">Preço de Venda</label>
-                            <input type="number" class="form-control" id="precoVenda" name="precoVenda" value="${precoVenda}">`);
-            if (!precoVenda){
-                resp.write(`
-                    <div>
-                        <span><p class="text-danger">Por favor, você deve informar o Preço de Venda!</p></span>
-                    </div>
-                    `);
-            }
-            resp.write(`
-                      
-                <div class="mb-3">
-                    <label for="dataValidade" class="form-label">Data de Validade</label>
-                    <input type="date" class="form-control" id="dataValidade" name="dataValidade" value="${dataValidade}">
-                `);
-        
-            if (!dataValidade){
-                resp.write(`
-                    <div>
-                        <span><p class="text-danger">Por favor, informe a Data de Validade!</p></span>
-                    </div>
-                    `);
-            }
-            resp.write(`
-                </select>
-            </div>
-            <div class="mb-3">
-                <label for="qtdEstoque" class="form-label">Quantidade de Estoque</label>
-                <input type="number" class="form-control" id="qtdEstoque" name="qtdEstoque" value="${qtdEstoque}">
-            `);
-        if (!qtdEstoque){
-            resp.write(`
-                <div>
-                    <span><p class="text-danger">Por favor, informe a Quantidade de Estoque!</p></span>
-                </div>
-                `);
-        }
-            resp.write(`
-                </select>
-            </div>
-            <div class="mb-3">
-                <label for="fabricante" class="form-label">Nome do Fabricante</label>
-                <input type="text" class="form-control" id="fabricante" name="fabricante" value="${fabricante}">
-            `);
-        if (!fabricante){
-            resp.write(`
-                <div>
-                    <span><p class="text-danger">Por favor, informe o Nome do Fabricante!</p></span>
-                </div>
-                `);
-        }
-            resp.write(`
-                </div>
-            <div class="mb-3">
-                <button class="btn btn-primary" type="submit">Cadastrar</button>
-            </div>
-            </form>
+    resp.write(`
+        </tbody>
+        </table>
+        <a class="btn btn-dark" href="/cadastrarProduto" role="button">Continuar cadastrando</a>
+        <a class="btn btn-dark" href="/" role="button">Voltar para o menu</a>
+        <br><br>
+        <div class="mb-3">
+            ${mensagemUltimoLogin}
         </div>
-            <div class="mb-3">
-             ${mensagemUltimoLogin}
-            </div>
         </body>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-        </html> `);
-
-    } 
-
+    </html>
+    `);
     resp.end();
 }
 
@@ -324,7 +281,7 @@ function autenticarUsuario(req, resp) {
     console.log("Usuário enviado:", usuario);
     console.log("Senha enviada:", senha);
 
-    if (usuario === 'admin' && senha === '1234') {
+    if (usuario === 'admin' && senha === '123') {
         console.log("Autenticação bem-sucedida");
         req.session.usuarioLogado = true;
         resp.cookie('dataHoraUltimoLogin', new Date().toLocaleString(), { maxAge: 1000 * 60 * 60 * 24 * 30, httpOnly: true });
