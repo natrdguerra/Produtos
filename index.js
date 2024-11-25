@@ -166,7 +166,7 @@ function menuView(req, resp) {
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="/cadastrarProduto">Cadastro de Produtos</a>
         </li>
-        <li>
+        <li class="nav-item">
         <a class="nav-link active" aria-current="page" href="/logout">Sair</a>
         </li>
       </ul>
