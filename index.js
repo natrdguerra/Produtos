@@ -1,4 +1,5 @@
 import express from 'express';
+import path from 'path';
 import session from 'express-session';
 import cookieParser from 'cookie-parser';
 
@@ -298,8 +299,8 @@ function verificarAutenticacao(req, resp, next) {
     }
 }    
 
-app.get('/login', (req, resp) =>{
-    resp.redirect('/login.html');
+app.get('/login.html', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'login.html'));
 });
 
 app.get('/logout', (req, resp) => {
