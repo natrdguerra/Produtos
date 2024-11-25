@@ -60,12 +60,12 @@ function cadastrarProdutoView(req, res) {
                     </div>
                     <div class="mb-3">
                         <label for="precoCusto" class="form-label">Preço de Custo</label>
-                        <input type="number" class="form-control" id="precoCusto" name="precoCusto" placeholder="Informe o Preço de Custo">
+                        <input type="number" class="form-control" id="precoCusto" name="precoCusto" step="0.01" placeholder="Informe o Preço de Custo">
                         <span class="error-message" id="erroprecoCusto"></span>
                     </div>
                     <div class="mb-3">
                         <label for="precoVenda" class="form-label">Preço de Venda</label>
-                        <input type="number" class="form-control" id="precoVenda" name="precoVenda" placeholder="Informe o Preço de Venda">
+                        <input type="number" class="form-control" id="precoVenda" name="precoVenda" step="0.01" placeholder="Informe o Preço de Venda">
                         <span class="error-message" id="erroprecoVenda"></span>
                     </div>
                     <div class="mb-3">
