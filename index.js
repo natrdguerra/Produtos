@@ -136,12 +136,18 @@ function cadastrarProdutoView(req, res) {
 function exibirUltimoLogin(req) {
     const dataHoraUltimoLogin = req.cookies['dataHoraUltimoLogin'];
     if (dataHoraUltimoLogin) {
-        return `<p><span>Seu último acesso foi realizado em ${dataHoraUltimoLogin}</span></p>`;
+
+        const dataHoraFormatada = new Intl.DateTimeFormat('pt-BR', {
+            timeZone: 'America/Sao_Paulo',
+            dateStyle: 'short',
+            timeStyle: 'short',
+        }).format(new Date(dataHoraUltimoLogin));
+
+        return `<p><span>Seu último acesso foi realizado em ${dataHoraFormatada}</span></p>`;
     } else {
         return `<p><span>Este é seu primeiro acesso.</span></p>`;
     }
 }
-
 
 function menuView(req, resp) {
     const mensagemUltimoLogin = exibirUltimoLogin(req);
