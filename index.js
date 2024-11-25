@@ -295,8 +295,8 @@ function verificarAutenticacao(req, resp, next) {
     }
 }    
 
-app.get('/login', (req, res) => {
-    res.redirect('/public/login.html');
+app.get('/test-login', (req, res) => {
+    res.sendFile(__dirname + '/pages/public/login.html');
 });
 
 app.get('/logout', (req, resp) => {
