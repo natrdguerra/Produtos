@@ -1,7 +1,7 @@
 import express from 'express';
 import session from 'express-session';
 import cookieParser from 'cookie-parser';
-import path from 'path';
+import path from 'path'
 
 const app = express();
 
