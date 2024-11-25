@@ -37,12 +37,6 @@ function cadastrarProdutoView(req, res) {
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <title>Cadastro de Produto</title>
             <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
-            <style>
-                .error-message {
-                    color: red;
-                    font-size: 0.9em;
-                }
-            </style>
         </head>
         <body>
             <div class="container mt-5">
@@ -51,37 +45,37 @@ function cadastrarProdutoView(req, res) {
                     <div class="mb-3">
                         <label for="codigoBarras" class="form-label">Código de Barras</label>
                         <input type="text" class="form-control" id="codigoBarras" name="codigoBarras" placeholder="Informe o Código de Barras">
-                        <span class="error-message" id="errocodigoBarras"></span>
+                        <span class="text-danger" id="errocodigoBarras"></span>
                     </div>
                     <div class="mb-3">
                         <label for="descricao" class="form-label">Descrição do Produto</label>
                         <input type="text" class="form-control" id="descricao" name="descricao" placeholder="Informe a Descrição do Produto">
-                        <span class="error-message" id="errodescricao"></span>
+                        <span class="text-danger" id="errodescricao"></span>
                     </div>
                     <div class="mb-3">
                         <label for="precoCusto" class="form-label">Preço de Custo</label>
                         <input type="number" class="form-control" id="precoCusto" name="precoCusto" step="0.01" placeholder="Informe o Preço de Custo">
-                        <span class="error-message" id="erroprecoCusto"></span>
+                        <span class="text-danger" id="erroprecoCusto"></span>
                     </div>
                     <div class="mb-3">
                         <label for="precoVenda" class="form-label">Preço de Venda</label>
                         <input type="number" class="form-control" id="precoVenda" name="precoVenda" step="0.01" placeholder="Informe o Preço de Venda">
-                        <span class="error-message" id="erroprecoVenda"></span>
+                        <span class="text-danger" id="erroprecoVenda"></span>
                     </div>
                     <div class="mb-3">
                         <label for="dataValidade" class="form-label">Data de Validade</label>
                         <input type="date" class="form-control" id="dataValidade" name="dataValidade">
-                        <span class="error-message" id="errodataValidade"></span>
+                        <span class="text-danger" id="errodataValidade"></span>
                     </div>
                     <div class="mb-3">
                         <label for="qtdEstoque" class="form-label">Quantidade em Estoque</label>
                         <input type="number" class="form-control" id="qtdEstoque" name="qtdEstoque" placeholder="Informe a Quantidade em Estoque">
-                        <span class="error-message" id="erroqtdEstoque"></span>
+                        <span class="text-danger" id="erroqtdEstoque"></span>
                     </div>
                     <div class="mb-3">
                         <label for="fabricante" class="form-label">Nome do Fabricante</label>
                         <input type="text" class="form-control" id="fabricante" name="fabricante" placeholder="Informe o Nome do Fabricante">
-                        <span class="error-message" id="errofabricante"></span>
+                        <span class="text-danger" id="errofabricante"></span>
                     </div>
                     <button type="submit" class="btn btn-primary">Cadastrar Produto</button>
                     <br><br>
