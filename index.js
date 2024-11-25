@@ -85,11 +85,9 @@ function cadastrarProdutoView(req, res) {
                 document.getElementById('formCadastro').addEventListener('submit', function(event) {
                     let isValid = true;
 
-                    // Limpar mensagens de erro e classes
                     document.querySelectorAll('.error-message').forEach(el => el.textContent = '');
                     document.querySelectorAll('.form-control, .form-select').forEach(el => el.classList.remove('is-invalid'));
 
-                    // Validação de campos
                     if (!document.getElementById('codigoBarras').value.trim()) {
                         document.getElementById('errocodigoBarras').textContent = 'O código de barras é obrigatório.';
                         document.getElementById('codigoBarras').classList.add('is-invalid');
@@ -126,7 +124,6 @@ function cadastrarProdutoView(req, res) {
                         isValid = false;
                     }
 
-                    // Impedir envio do formulário se inválido
                     if (!isValid) {
                         event.preventDefault();
                     }
