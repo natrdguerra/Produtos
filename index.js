@@ -1,4 +1,6 @@
 import express from 'express';
+import path from 'path';
+
 import session from 'express-session';
 import cookieParser from 'cookie-parser';
 
@@ -19,7 +21,10 @@ app.use(cookieParser());
 
 app.use(express.urlencoded({ extended: true }));
 
-app.use(express.static('./pages/public'));
+app.use(express.static(path.join(process.cwd(), 'pages/public')));
+
+const porta = 3000;
+const host = 'localhost';
 
 var listaProdutos = [];
 
@@ -294,8 +299,8 @@ function verificarAutenticacao(req, resp, next) {
     }
 }    
 
-app.get('/test-login', (req, res) => {
-    res.sendFile(__dirname + '/pages/public/login.html');
+app.get('/login', (req, resp) =>{
+    resp.redirect('/login.html');
 });
 
 app.get('/logout', (req, resp) => {
@@ -307,12 +312,6 @@ app.get('/',verificarAutenticacao,menuView);
 app.get('/cadastrarProduto', verificarAutenticacao,cadastrarProdutoView);
 app.post('/cadastrarProduto', verificarAutenticacao, cadastrarProduto);
 
-if (process.env.NODE_ENV !== 'production') {
-    const porta = 3000;
-    const host = 'localhost';
-    app.listen(porta, host, () => {
-        console.log(`Servidor rodando em http://${host}:${porta}`);
-    });
-}
-
-export default app;
+app.listen(porta, host, () => {
+    console.log(`Servidor iniciado e em execução no endereço http://${host}:${porta}`);
+});
